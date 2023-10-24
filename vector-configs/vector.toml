@@ -20,8 +20,12 @@
   inputs = ["nats"]
   source = '''
   . = parse_json!(.message)
-  merge(.message, .)
-  . = .message
+  . = object!(.)
+  if (is_string(.message); is_json(string!(.message))) {
+    msg = object!(parse_json!(.message))
+    . = merge(., msg)
+    .name = "log"
+  }
   '''
 
 [sinks.fly_log_metrics_prometheus]
