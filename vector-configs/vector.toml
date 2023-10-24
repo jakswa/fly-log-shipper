@@ -21,10 +21,11 @@
   source = '''
   . = parse_json!(.message)
   . = object!(.)
+  .name = "log.text"
   if (is_string(.message); is_json(string!(.message))) {
     msg = object!(parse_json!(.message))
     . = merge(., msg)
-    .name = "log"
+    .name = "log.json"
   }
   '''
 
